@@ -20,17 +20,17 @@ import (
 func ParseContent(name string) []question.Question {
 
 	file, err := os.Open(name)
-	common.Pc(err)
+	common.PC(err)
 	defer func() {
 		file.Close()
 	}()
 
 	fileinfo, err := file.Stat()
-	common.Pc(err)
+	common.PC(err)
 
 	size := fileinfo.Size()
 	doc, err := docx.Parse(file, size)
-	common.Pc(err)
+	common.PC(err)
 
 	// 初始化 question 全局变量
 	question.InitPaper()

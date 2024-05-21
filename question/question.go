@@ -66,7 +66,7 @@ func (qs *Question) ParseTitle(matched []string) {
 	qs.state = "qs_title"
 
 	no, err := strconv.Atoi(matched[1])
-	common.Pc(err)
+	common.PC(err)
 	qs.No = no
 	qs.Title = matched[2]
 
@@ -88,7 +88,7 @@ func (qs *Question) ParseOptions(matched []string) {
 	options = append(options, newOption)
 	qs.Options = options
 
-	// common.Pf("current qs: %v, %v", qs.Options, qs.No)
+	// common.PF("current qs: %v, %v", qs.Options, qs.No)
 	qs.AddQuestion()
 }
 
@@ -127,7 +127,7 @@ func (qs *Question) ParsePaperEnd(matched []string) {
 		AllQuestions = append(AllQuestions, mapQs[i])
 	}
 
-	common.Pf("试卷结束: %v - 试题长度：%v", matched[0], len(mapQs))
+	common.PF("试卷结束: %v - 试题长度：%v", matched[0], len(mapQs))
 	// 初始化当前试题 map
 	mapQs = make(map[int]Question, 30)
 }
@@ -145,7 +145,7 @@ func ParseContent(text string) {
 
 	for index, pattern := range patterns {
 		reg, err := regexp.Compile(pattern)
-		common.Pc(err)
+		common.PC(err)
 
 		textMatched := reg.FindStringSubmatch(text)
 		if textMatched != nil {
@@ -184,7 +184,7 @@ func (qs Question) AddQuestion() {
 	if qs.No != 0 {
 		mapQs[qs.No] = qs
 	} else {
-		common.Pc(errors.New("试题编号为空"))
+		common.PC(errors.New("试题编号为空"))
 	}
 }
 

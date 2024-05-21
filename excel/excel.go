@@ -37,14 +37,17 @@ var sheetName = "Sheet1"
 
 func GenerateExcelFile(data []question.Question, name string) {
 	rowNo = 1
-	baseDir, _ := os.Getwd()
-	excelDir := filepath.Clean(baseDir + "/runtime/excel")
+	excelDir := "./runtime/excel"
+	if ok := common.IsExistDir(excelDir); !ok {
+		err := os.Mkdir(excelDir, 0755)
+		common.PC(err)
+	}
 
 	baseName := filepath.Base(name)
 	excelName := baseName[:len(baseName)-5] + ".xlsx"
 	excelPathName := filepath.Clean(excelDir + "/" + excelName)
 
-	common.Pf("file name: %v", excelPathName)
+	common.PF("file name: %v", excelPathName)
 	f := excelize.NewFile()
 	defer func() {
 		f.Close()
@@ -56,7 +59,7 @@ func GenerateExcelFile(data []question.Question, name string) {
 	WriteBody(f, data)
 
 	err := f.SaveAs(excelPathName)
-	common.Pc(err)
+	common.PC(err)
 }
 
 func WriteHeader(f *excelize.File) {
@@ -66,10 +69,10 @@ func WriteHeader(f *excelize.File) {
 	}
 
 	startCell, err := excelize.CoordinatesToCellName(1, rowNo)
-	common.Pc(err)
+	common.PC(err)
 
 	err = f.SetSheetRow(sheetName, startCell, &d)
-	common.Pc(err)
+	common.PC(err)
 
 	rowNo += 1
 }
@@ -80,10 +83,10 @@ func WriteBody(f *excelize.File, data []question.Question) {
 			formatData := FormatRow(item)
 
 			startCell, err := excelize.CoordinatesToCellName(1, rowNo)
-			common.Pc(err)
+			common.PC(err)
 
 			err = f.SetSheetRow(sheetName, startCell, &formatData)
-			common.Pc(err)
+			common.PC(err)
 
 			rowNo += 1
 		}
@@ -97,7 +100,7 @@ func FormatRow(question question.Question) []interface{} {
 	var typeTxt string
 	var ok bool
 	if typeTxt, ok = dicQuestionType[question.TypeNo]; !ok {
-		common.Pc(errors.New("题型名称无法识别"))
+		common.PC(errors.New("题型名称无法识别"))
 	}
 
 	data[0] = question.Title
@@ -118,7 +121,7 @@ func FormatRow(question question.Question) []interface{} {
 	for di := 16; di < len(data); di++ {
 		data[di] = ""
 	}
-	// common.Pf("data: %v", data)
+	// common.PF("data: %v", data)
 	// os.Exit(1)
 	return data
 }
