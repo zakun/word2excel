@@ -2,7 +2,7 @@
  * @Author: qizk qizk@mail.open.com.cn
  * @Date: 2022-09-06 13:44:45
  * @LastEditors: qizk qizk@mail.open.com.cn
- * @LastEditTime: 2024-05-21 14:37:39
+ * @LastEditTime: 2024-05-30 17:23:15
  * @FilePath: \helloworld\hello.go
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -11,7 +11,7 @@ package main
 import (
 	"errors"
 	"io/fs"
-	"os"
+
 	"path/filepath"
 
 	"example.io/common"
@@ -20,11 +20,6 @@ import (
 )
 
 func main() {
-	runtimePath := "./runtime"
-	if ok := common.IsExistDir(runtimePath); !ok {
-		err := os.Mkdir(runtimePath, 0777)
-		common.PC(err)
-	}
 
 	wordDir := filepath.Clean("./runtime/word/")
 	if ok := common.IsExistDir(wordDir); !ok {
