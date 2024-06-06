@@ -10,7 +10,6 @@ package excel
 
 import (
 	"errors"
-	"fmt"
 	"os"
 	"path/filepath"
 
@@ -50,7 +49,7 @@ func GenerateExcelFile(data []question.Question, name string) {
 	excelPathName := filepath.Clean(excelDir + "/" + excelName)
 
 	common.PF("Excel file: %v", excelPathName)
-	logger.Info(fmt.Sprintf("Excel 文件: %v", excelPathName))
+	logger.Info(common.Sprintf("Excel 文件: %v", excelPathName))
 
 	f := excelize.NewFile()
 	defer func() {

@@ -10,7 +10,6 @@ package question
 
 import (
 	"errors"
-	"fmt"
 	"regexp"
 	"slices"
 	"strconv"
@@ -131,7 +130,7 @@ func (qs *Question) ParsePaperEnd(matched []string) {
 
 	common.PF("试卷结束: %v - 试题长度：%v", matched[0], len(mapQs))
 
-	logger.Info(fmt.Sprintf("试卷结束： %v - 试题长度: %v", matched[0], len(mapQs)))
+	logger.Info(common.Sprintf("试卷结束： %v - 试题长度: %v", matched[0], len(mapQs)))
 	// 初始化当前试题 map
 	mapQs = make(map[int]Question, 30)
 }
