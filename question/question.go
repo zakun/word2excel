@@ -2,7 +2,7 @@
  * @Author: qizk qizk@mail.open.com.cn
  * @Date: 2024-05-13 10:33:03
  * @LastEditors: qizk qizk@mail.open.com.cn
- * @LastEditTime: 2024-05-30 17:30:59
+ * @LastEditTime: 2024-06-06 13:45:40
  * @FilePath: \word2excel\question\question.go
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: htcommon.Pcs://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -10,12 +10,14 @@ package question
 
 import (
 	"errors"
+	"fmt"
 	"regexp"
 	"slices"
 	"strconv"
 	"strings"
 
 	"example.io/common"
+	"example.io/logger"
 )
 
 var DicType = map[int][]string{
@@ -128,6 +130,8 @@ func (qs *Question) ParsePaperEnd(matched []string) {
 	}
 
 	common.PF("试卷结束: %v - 试题长度：%v", matched[0], len(mapQs))
+
+	logger.Info(fmt.Sprintf("试卷结束： %v - 试题长度: %v", matched[0], len(mapQs)))
 	// 初始化当前试题 map
 	mapQs = make(map[int]Question, 30)
 }

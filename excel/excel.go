@@ -10,10 +10,12 @@ package excel
 
 import (
 	"errors"
+	"fmt"
 	"os"
 	"path/filepath"
 
 	"example.io/common"
+	"example.io/logger"
 	"example.io/question"
 	"github.com/xuri/excelize/v2"
 )
@@ -47,7 +49,9 @@ func GenerateExcelFile(data []question.Question, name string) {
 	excelName := baseName[:len(baseName)-5] + ".xlsx"
 	excelPathName := filepath.Clean(excelDir + "/" + excelName)
 
-	common.PF("file name: %v", excelPathName)
+	common.PF("Excel file: %v", excelPathName)
+	logger.Info(fmt.Sprintf("Excel 文件: %v", excelPathName))
+
 	f := excelize.NewFile()
 	defer func() {
 		f.Close()
