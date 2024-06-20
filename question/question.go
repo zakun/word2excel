@@ -2,7 +2,7 @@
  * @Author: qizk qizk@mail.open.com.cn
  * @Date: 2024-05-13 10:33:03
  * @LastEditors: qizk qizk@mail.open.com.cn
- * @LastEditTime: 2024-06-06 13:45:40
+ * @LastEditTime: 2024-06-20 14:26:10
  * @FilePath: \word2excel\question\question.go
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: htcommon.Pcs://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -178,7 +178,7 @@ func ParseContent(text string) {
 }
 
 // 初始化 全局变量
-func InitWrod() {
+func InitWord() {
 	mapQs = make(map[int]Question, 30)
 	AllQuestions = make([]Question, 0, 30)
 }
