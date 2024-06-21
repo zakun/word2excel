@@ -2,7 +2,7 @@
  * @Author: qizk qizk@mail.open.com.cn
  * @Date: 2024-06-20 14:15:06
  * @LastEditors: qizk qizk@mail.open.com.cn
- * @LastEditTime: 2024-06-21 14:12:59
+ * @LastEditTime: 2024-06-21 15:36:00
  * @FilePath: \word2excel\question\rules.go
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -19,18 +19,8 @@ import (
 	"example.io/logger"
 )
 
-var (
-	patterns = []string{
-		`^([一二三四五六七八九十]+)、\s*(.*)`,
-		`^(\d+)\.\s*(.*)`,
-		`^([A-Z])(\.\s*)(.*)`,
-		`^(答案：\s*)(.*)`,
-		`^(解析：\s*)(.*)`,
-		`^(%试卷结束%)$`,
-	}
-)
-
 type RuleTwo struct {
+	patterns              []string
 	questionNo            int
 	size                  int
 	currentQuestion       *Question
@@ -47,6 +37,14 @@ func NewRuleTwoInstance(config ...any) *RuleTwo {
 	}
 
 	return &RuleTwo{
+		patterns: []string{
+			`^([一二三四五六七八九十]+)、\s*(.*)`,
+			`^(\d+)\.\s*(.*)`,
+			`^([A-Z])(\.\s*)(.*)`,
+			`^(答案：\s*)(.*)`,
+			`^(解析：\s*)(.*)`,
+			`^(%试卷结束%)$`,
+		},
 		questionNo:            0,
 		size:                  size,
 		currentQuestion:       NewQuestion(),
@@ -58,7 +56,7 @@ func NewRuleTwoInstance(config ...any) *RuleTwo {
 func (r *RuleTwo) StartParse(text string) {
 	isMatched := false
 
-	for index, pattern := range patterns {
+	for index, pattern := range r.patterns {
 		reg, err := regexp.Compile(pattern)
 		common.PC(err)
 
