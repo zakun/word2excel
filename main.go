@@ -2,7 +2,7 @@
  * @Author: qizk qizk@mail.open.com.cn
  * @Date: 2022-09-06 13:44:45
  * @LastEditors: qizk qizk@mail.open.com.cn
- * @LastEditTime: 2024-06-06 14:00:20
+ * @LastEditTime: 2024-06-21 08:57:58
  * @FilePath: \helloworld\hello.go
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -31,7 +31,7 @@ func main() {
 	}
 	// common.PF("word path: %v", wordDir)
 
-	var fileNo int32
+	var fileNo int
 	filepath.WalkDir(wordDir, func(name string, entry fs.DirEntry, err error) error {
 		if !entry.IsDir() {
 			extname := filepath.Ext(name)
