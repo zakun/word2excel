@@ -2,9 +2,9 @@
  * @Author: qizk qizk@mail.open.com.cn
  * @Date: 2022-09-06 13:44:45
  * @LastEditors: qizk qizk@mail.open.com.cn
- * @LastEditTime: 2024-06-21 14:01:05
+ * @LastEditTime: 2024-06-24 10:26:02
  * @FilePath: \go_demo\helloworld\hello.go
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: htcommon.Pcs://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: htcommon.Throw_panics://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 package word
 
@@ -20,22 +20,20 @@ import (
 func ParseContent(name string) []question.Question {
 
 	file, err := os.Open(name)
-	common.PC(err)
+	common.Throw_panic(err)
 	defer func() {
 		file.Close()
 	}()
 
 	fileinfo, err := file.Stat()
-	common.PC(err)
+	common.Throw_panic(err)
 
 	size := fileinfo.Size()
 	doc, err := docx.Parse(file, size)
-	common.PC(err)
+	common.Throw_panic(err)
 
-	// 初始化 question 全局变量
-	// question.InitWord()
 	rule, err := factory.GetRuleInstance("two", 30)
-	common.PC(err)
+	common.Throw_panic(err)
 
 	// qs := question.NewQuestion()
 	for _, item := range doc.Document.Body.Items {

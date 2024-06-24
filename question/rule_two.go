@@ -2,7 +2,7 @@
  * @Author: qizk qizk@mail.open.com.cn
  * @Date: 2024-06-20 14:15:06
  * @LastEditors: qizk qizk@mail.open.com.cn
- * @LastEditTime: 2024-06-24 09:51:17
+ * @LastEditTime: 2024-06-24 10:25:16
  * @FilePath: \word2excel\question\rules.go
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -58,7 +58,7 @@ func (r *RuleTwo) StartParse(text string) {
 
 	for index, pattern := range r.patterns {
 		reg, err := regexp.Compile(pattern)
-		common.PC(err)
+		common.Throw_panic(err)
 
 		textMatched := reg.FindStringSubmatch(text)
 		if textMatched != nil {
@@ -180,7 +180,6 @@ func (r *RuleTwo) ParsePaperEnd(matched []string) {
 		r.AllPaperQuestions = append(r.AllPaperQuestions, s1...)
 	}
 
-	// common.PF("试卷结束, 试题长度：%v, matched: %v", len(r.currentPaperQuestions), matched)
 	logger.Info("试卷结束, 试题长度: %v, matched: %+v", len(r.currentPaperQuestions), matched)
 
 	r.currentPaperQuestions = make(map[int]Question, 30)
@@ -192,7 +191,7 @@ func (r *RuleTwo) AddQuestion(qs *Question) {
 	} else if r.currentQuestion.No != 0 {
 		r.currentPaperQuestions[r.currentQuestion.No] = *r.currentQuestion
 	} else {
-		common.PC(errors.New("试题编号不能为空"))
+		common.Throw_panic(errors.New("试题编号不能为空"))
 	}
 }
 

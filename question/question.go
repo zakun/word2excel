@@ -4,7 +4,7 @@
  * @LastEditors: qizk qizk@mail.open.com.cn
  * @LastEditTime: 2024-06-21 10:07:28
  * @FilePath: \word2excel\question\question.go
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: htcommon.Pcs://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: htcommon.Throw_panics://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 package question
 

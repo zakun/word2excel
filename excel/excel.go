@@ -41,7 +41,7 @@ func GenerateExcelFile(data []question.Question, name string) {
 	excelDir := "./runtime/excel"
 	if ok := common.IsExistDir(excelDir); !ok {
 		err := os.Mkdir(excelDir, 0755)
-		common.PC(err)
+		common.Throw_panic(err)
 	}
 
 	baseName := filepath.Base(name)
@@ -62,7 +62,7 @@ func GenerateExcelFile(data []question.Question, name string) {
 	WriteBody(f, data)
 
 	err := f.SaveAs(excelPathName)
-	common.PC(err)
+	common.Throw_panic(err)
 }
 
 func WriteHeader(f *excelize.File) {
@@ -72,10 +72,10 @@ func WriteHeader(f *excelize.File) {
 	}
 
 	startCell, err := excelize.CoordinatesToCellName(1, rowNo)
-	common.PC(err)
+	common.Throw_panic(err)
 
 	err = f.SetSheetRow(sheetName, startCell, &d)
-	common.PC(err)
+	common.Throw_panic(err)
 
 	rowNo += 1
 }
@@ -86,10 +86,10 @@ func WriteBody(f *excelize.File, data []question.Question) {
 			formatData := FormatRow(item)
 
 			startCell, err := excelize.CoordinatesToCellName(1, rowNo)
-			common.PC(err)
+			common.Throw_panic(err)
 
 			err = f.SetSheetRow(sheetName, startCell, &formatData)
-			common.PC(err)
+			common.Throw_panic(err)
 
 			rowNo += 1
 		}
@@ -103,7 +103,7 @@ func FormatRow(question question.Question) []interface{} {
 	var typeTxt string
 	var ok bool
 	if typeTxt, ok = dicQuestionType[question.TypeNo]; !ok {
-		common.PC(errors.New("题型名称无法识别"))
+		common.Throw_panic(errors.New("题型名称无法识别"))
 	}
 
 	data[0] = question.Title
