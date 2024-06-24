@@ -37,14 +37,14 @@ type Question struct {
 	Options  []string `json:"options"`
 	Answer   string   `json:"answer"`
 	Analysis string   `json:"analysis"`
-	state    Q_STATE
+	State    Q_STATE
 }
 
 func NewQuestion() *Question {
 	return &Question{}
 }
 
-func (qs *Question) reset() {
+func (qs *Question) Reset() {
 	qs.No = 0
 	qs.Title = ""
 	qs.Options = make([]string, 0, 8)
