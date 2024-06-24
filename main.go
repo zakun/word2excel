@@ -2,7 +2,7 @@
  * @Author: qizk qizk@mail.open.com.cn
  * @Date: 2022-09-06 13:44:45
  * @LastEditors: qizk qizk@mail.open.com.cn
- * @LastEditTime: 2024-06-21 08:57:58
+ * @LastEditTime: 2024-06-24 10:11:44
  * @FilePath: \helloworld\hello.go
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -37,10 +37,10 @@ func main() {
 			extname := filepath.Ext(name)
 			if extname == ".docx" {
 				fileNo++
-				logger.Info(common.Sprintf("Word 文件: %v# %v", fileNo, name))
+
+				logger.Info("Word 文件: %v# %v", fileNo, name)
 				arrQuestion := word.ParseContent(name)
 
-				// common.PF("questions: %v", arrQuestion)
 				// 生成excel文件
 				if len(arrQuestion) > 0 {
 					excel.GenerateExcelFile(arrQuestion, name)

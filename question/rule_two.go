@@ -2,7 +2,7 @@
  * @Author: qizk qizk@mail.open.com.cn
  * @Date: 2024-06-20 14:15:06
  * @LastEditors: qizk qizk@mail.open.com.cn
- * @LastEditTime: 2024-06-21 15:36:00
+ * @LastEditTime: 2024-06-24 09:51:17
  * @FilePath: \word2excel\question\rules.go
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -180,13 +180,9 @@ func (r *RuleTwo) ParsePaperEnd(matched []string) {
 		r.AllPaperQuestions = append(r.AllPaperQuestions, s1...)
 	}
 
-	// common.PF("current all question: %v, %v ", len(r.AllPaperQuestions), r.AllPaperQuestions)
+	// common.PF("试卷结束, 试题长度：%v, matched: %v", len(r.currentPaperQuestions), matched)
+	logger.Info("试卷结束, 试题长度: %v, matched: %+v", len(r.currentPaperQuestions), matched)
 
-	common.PF("试卷结束: %v - 试题长度：%v", matched[0], len(r.currentPaperQuestions))
-
-	logger.Info(common.Sprintf("试卷结束： %v - 试题长度: %v", matched[0], len(r.currentPaperQuestions)))
-
-	// common.PF("== all questions == \n %v, %v", len(r.AllPaperQuestions), r.AllPaperQuestions)
 	r.currentPaperQuestions = make(map[int]Question, 30)
 }
 
@@ -201,13 +197,18 @@ func (r *RuleTwo) AddQuestion(qs *Question) {
 }
 
 func (r *RuleTwo) AddContent(text string) {
-	// 未被匹配到的数据行都会到这里
+	// 未被匹配到的数据行都会到这里, 处理换行数据
 	if r.currentQuestion.state == Q_ANALYSIS {
 		r.currentQuestion.Analysis += "\n" + text
 		r.AddQuestion(nil)
 	}
 }
 
-func (r RuleTwo) GetAllQuestions() []Question {
+func (r *RuleTwo) GetAllQuestions() []Question {
+	if len(r.currentPaperQuestions) > 0 {
+		// word文本结束时，最后一行没有 结束标记时， 移除currentPaperQuestions中的数据到AllPaperQuestions中
+		r.ParsePaperEnd(nil)
+	}
+
 	return r.AllPaperQuestions
 }
