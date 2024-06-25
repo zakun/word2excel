@@ -12,6 +12,7 @@ import (
 	"errors"
 
 	"example.io/question"
+	"example.io/question/rules/rule_three"
 	"example.io/question/rules/rule_two"
 )
 
@@ -20,6 +21,8 @@ func GetRuleInstance(name string, params ...any) (question.Rule, error) {
 	case "two":
 		// 第二套导题模板
 		return rule_two.NewRuleTwoInstance(params...), nil
+	case "three":
+		return rule_three.NewRuleThreeInstance(params...), nil
 	}
 
 	return nil, errors.New("规则模板不存在")

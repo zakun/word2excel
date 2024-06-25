@@ -9,7 +9,7 @@
 package question
 
 type Rule interface {
-	StartParse(string)
+	StartParse(string, string)
 
 	ParseType([]string)
 	ParseTitle([]string)

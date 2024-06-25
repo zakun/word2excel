@@ -2,7 +2,7 @@
  * @Author: qizk qizk@mail.open.com.cn
  * @Date: 2024-06-20 14:15:06
  * @LastEditors: qizk qizk@mail.open.com.cn
- * @LastEditTime: 2024-06-24 11:17:49
+ * @LastEditTime: 2024-06-25 13:08:42
  * @FilePath: \word2excel\question\rules.go
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -10,6 +10,7 @@ package rule_two
 
 import (
 	"errors"
+	"path/filepath"
 	"regexp"
 	"slices"
 	"sort"
@@ -22,6 +23,7 @@ import (
 
 type RuleTwo struct {
 	patterns              []string
+	FileName              string
 	questionNo            int
 	size                  int
 	currentQuestion       *question.Question
@@ -46,6 +48,7 @@ func NewRuleTwoInstance(config ...any) *RuleTwo {
 			`^(解析：\s*)(.*)`,
 			`^(%试卷结束%)$`,
 		},
+		FileName:              "",
 		questionNo:            0,
 		size:                  size,
 		currentQuestion:       question.NewQuestion(),
@@ -54,7 +57,8 @@ func NewRuleTwoInstance(config ...any) *RuleTwo {
 	}
 }
 
-func (r *RuleTwo) StartParse(text string) {
+func (r *RuleTwo) StartParse(text string, name string) {
+	r.FileName = name
 	isMatched := false
 
 	for index, pattern := range r.patterns {
@@ -181,8 +185,6 @@ func (r *RuleTwo) ParsePaperEnd(matched []string) {
 		r.AllPaperQuestions = append(r.AllPaperQuestions, s1...)
 	}
 
-	logger.Info("试卷结束, 试题长度: %v, matched: %+v", len(r.currentPaperQuestions), matched)
-
 	r.currentPaperQuestions = make(map[int]question.Question, 30)
 }
 
@@ -210,5 +212,7 @@ func (r *RuleTwo) GetAllQuestions() []question.Question {
 		r.ParsePaperEnd(nil)
 	}
 
+	fileName := filepath.Base(r.FileName)
+	logger.Info("==info==> %v, 试题长度: %v", fileName, len(r.AllPaperQuestions))
 	return r.AllPaperQuestions
 }

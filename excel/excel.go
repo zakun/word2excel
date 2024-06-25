@@ -2,7 +2,7 @@
  * @Author: qizk qizk@mail.open.com.cn
  * @Date: 2024-05-17 15:35:01
  * @LastEditors: qizk qizk@mail.open.com.cn
- * @LastEditTime: 2024-06-24 10:02:46
+ * @LastEditTime: 2024-06-25 13:06:28
  * @FilePath: \word2excel\excel\excel.go
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -14,7 +14,6 @@ import (
 	"path/filepath"
 
 	"example.io/common"
-	"example.io/logger"
 	"example.io/question"
 	"github.com/xuri/excelize/v2"
 )
@@ -49,7 +48,7 @@ func GenerateExcelFile(data []question.Question, name string) {
 	excelPathName := filepath.Clean(excelDir + "/" + excelName)
 
 	// common.PF("生成Excel文件: %v\n", excelPathName)
-	logger.Info("Excel 文件: %v", excelPathName)
+	// logger.Info("Excel 文件: %v", excelPathName)
 
 	f := excelize.NewFile()
 	defer func() {
