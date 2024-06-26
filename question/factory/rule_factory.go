@@ -25,5 +25,5 @@ func GetRuleInstance(name string, params ...any) (question.Rule, error) {
 		return rule_three.NewRuleThreeInstance(params...), nil
 	}
 
-	return nil, errors.New("规则模板不存在")
+	return nil, errors.New("模板规则不存在, 当前仅支持two, three两种类型")
 }

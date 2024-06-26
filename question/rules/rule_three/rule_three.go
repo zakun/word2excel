@@ -2,14 +2,13 @@
  * @Author: qizk qizk@mail.open.com.cn
  * @Date: 2024-06-20 14:15:06
  * @LastEditors: qizk qizk@mail.open.com.cn
- * @LastEditTime: 2024-06-25 13:07:36
+ * @LastEditTime: 2024-06-26 15:33:21
  * @FilePath: \word2excel\question\rules.go
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 package rule_three
 
 import (
-	"errors"
 	"path/filepath"
 	"regexp"
 	"slices"
@@ -206,7 +205,8 @@ func (r *RuleThree) AddQuestion(qs *question.Question) {
 	} else if r.currentQuestion.No != 0 {
 		r.currentPaperQuestions[r.currentQuestion.No] = *r.currentQuestion
 	} else {
-		common.Throw_panic(errors.New("试题编号不能为空"))
+		// logger.Info("==error==>试题编号不能为空, file: %v, question: %+v", r.FileName, r.currentQuestion)
+		// common.Throw_panic(errors.New(msg))
 	}
 }
 
@@ -225,6 +225,6 @@ func (r *RuleThree) GetAllQuestions() []question.Question {
 	}
 
 	fileName := filepath.Base(r.FileName)
-	logger.Info("==info==> %v, 试题长度: %v", fileName, len(r.AllPaperQuestions))
+	logger.Info("=解析完毕= %v, 试题长度: %v", fileName, len(r.AllPaperQuestions))
 	return r.AllPaperQuestions
 }
