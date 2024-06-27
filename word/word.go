@@ -2,7 +2,7 @@
  * @Author: qizk qizk@mail.open.com.cn
  * @Date: 2022-09-06 13:44:45
  * @LastEditors: qizk qizk@mail.open.com.cn
- * @LastEditTime: 2024-06-26 13:19:02
+ * @LastEditTime: 2024-06-27 15:22:51
  * @FilePath: \go_demo\helloworld\hello.go
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: htcommon.Throw_panics://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -13,7 +13,6 @@ import (
 	"os"
 
 	"example.io/common"
-	"example.io/logger"
 	"example.io/question"
 	"example.io/question/factory"
 	"github.com/fumiama/go-docx"
@@ -44,10 +43,10 @@ func (w Word) ParseContent() ([]question.Question, common.Judge) {
 		file.Close()
 
 		// 移除处理过的文件
-		err := os.Remove(w.Name)
-		if err != nil {
-			logger.Info("删除失败：%v, err: %v", w.Name, err)
-		}
+		// err := os.Remove(w.Name)
+		// if err != nil {
+		// 	logger.Info("删除失败：%v, err: %v", w.Name, err)
+		// }
 	}()
 
 	fileinfo, _ := file.Stat()

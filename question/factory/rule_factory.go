@@ -12,18 +12,23 @@ import (
 	"errors"
 
 	"example.io/question"
+	"example.io/question/rules/rule_one"
 	"example.io/question/rules/rule_three"
 	"example.io/question/rules/rule_two"
 )
 
 func GetRuleInstance(name string, params ...any) (question.Rule, error) {
 	switch name {
+	case "one":
+		// 第一套导题模板
+		return rule_one.NewRuleOneInstance(params...), nil
 	case "two":
 		// 第二套导题模板
 		return rule_two.NewRuleTwoInstance(params...), nil
 	case "three":
+		// 第三套导题模板
 		return rule_three.NewRuleThreeInstance(params...), nil
 	}
 
-	return nil, errors.New("模板规则不存在, 当前仅支持two, three两种类型")
+	return nil, errors.New("模板规则不存在, 当前仅支持one, two, three三种类型")
 }
