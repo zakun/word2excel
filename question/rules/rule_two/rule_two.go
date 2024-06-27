@@ -2,21 +2,19 @@
  * @Author: qizk qizk@mail.open.com.cn
  * @Date: 2024-06-20 14:15:06
  * @LastEditors: qizk qizk@mail.open.com.cn
- * @LastEditTime: 2024-06-25 13:08:42
+ * @LastEditTime: 2024-06-27 10:12:26
  * @FilePath: \word2excel\question\rules.go
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 package rule_two
 
 import (
-	"errors"
 	"path/filepath"
 	"regexp"
 	"slices"
 	"sort"
 	"strings"
 
-	"example.io/common"
 	"example.io/logger"
 	"example.io/question"
 )
@@ -62,8 +60,7 @@ func (r *RuleTwo) StartParse(text string, name string) {
 	isMatched := false
 
 	for index, pattern := range r.patterns {
-		reg, err := regexp.Compile(pattern)
-		common.Throw_panic(err)
+		reg, _ := regexp.Compile(pattern)
 
 		textMatched := reg.FindStringSubmatch(text)
 		if textMatched != nil {
@@ -194,7 +191,7 @@ func (r *RuleTwo) AddQuestion(qs *question.Question) {
 	} else if r.currentQuestion.No != 0 {
 		r.currentPaperQuestions[r.currentQuestion.No] = *r.currentQuestion
 	} else {
-		common.Throw_panic(errors.New("试题编号不能为空"))
+		logger.Error("试题解析错误, 不符合试题规则：%v， %v", r.FileName, r.currentQuestion)
 	}
 }
 
@@ -213,6 +210,6 @@ func (r *RuleTwo) GetAllQuestions() []question.Question {
 	}
 
 	fileName := filepath.Base(r.FileName)
-	logger.Info("==info==> %v, 试题长度: %v", fileName, len(r.AllPaperQuestions))
+	logger.Info("=解析完毕= %v, 试题长度: %v", fileName, len(r.AllPaperQuestions))
 	return r.AllPaperQuestions
 }
