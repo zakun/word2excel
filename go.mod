@@ -1,4 +1,4 @@
-module example.io
+module word2excel.io
 
 go 1.19
 
@@ -17,4 +17,4 @@ require (
 	golang.org/x/text v0.14.0 // indirect
 )
 
-replace example.io => ./
+replace word2excel.io => ./

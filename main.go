@@ -17,10 +17,10 @@ import (
 
 	"path/filepath"
 
-	"example.io/common"
-	"example.io/excel"
-	"example.io/logger"
-	"example.io/word"
+	"word2excel.io/common"
+	"word2excel.io/excel"
+	"word2excel.io/logger"
+	"word2excel.io/word"
 )
 
 var (

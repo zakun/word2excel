@@ -16,8 +16,8 @@ import (
 	"strconv"
 	"strings"
 
-	"example.io/logger"
-	"example.io/question"
+	"word2excel.io/logger"
+	"word2excel.io/question"
 )
 
 type RuleOne struct {

@@ -13,9 +13,9 @@ import (
 	"os"
 	"path/filepath"
 
-	"example.io/common"
-	"example.io/question"
 	"github.com/xuri/excelize/v2"
+	"word2excel.io/common"
+	"word2excel.io/question"
 )
 
 var fileTitleField = []string{"title", "type", "typeName", "oA", "oB", "oC", "oD", "oE", "oF", "oG", "oH", "oI", "oJ", "oK", "answer", "analysis", "material", "score", "chapter", "keyword", "frequency", "facility", "ability", "year"}

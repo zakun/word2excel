@@ -12,10 +12,10 @@ import (
 	"encoding/json"
 	"os"
 
-	"example.io/common"
-	"example.io/question"
-	"example.io/question/factory"
 	"github.com/fumiama/go-docx"
+	"word2excel.io/common"
+	"word2excel.io/question"
+	"word2excel.io/question/factory"
 )
 
 type Word struct {

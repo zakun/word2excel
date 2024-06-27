@@ -11,10 +11,10 @@ package factory
 import (
 	"errors"
 
-	"example.io/question"
-	"example.io/question/rules/rule_one"
-	"example.io/question/rules/rule_three"
-	"example.io/question/rules/rule_two"
+	"word2excel.io/question"
+	"word2excel.io/question/rules/rule_one"
+	"word2excel.io/question/rules/rule_three"
+	"word2excel.io/question/rules/rule_two"
 )
 
 func GetRuleInstance(name string, params ...any) (question.Rule, error) {
