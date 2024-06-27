@@ -2,7 +2,7 @@
  * @Author: qizk qizk@mail.open.com.cn
  * @Date: 2024-06-20 14:15:06
  * @LastEditors: qizk qizk@mail.open.com.cn
- * @LastEditTime: 2024-06-26 15:33:21
+ * @LastEditTime: 2024-06-26 17:54:16
  * @FilePath: \word2excel\question\rules.go
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -15,7 +15,6 @@ import (
 	"sort"
 	"strings"
 
-	"example.io/common"
 	"example.io/logger"
 	"example.io/question"
 )
@@ -60,8 +59,7 @@ func (r *RuleThree) StartParse(text string, name string) {
 	isMatched := false
 
 	for index, pattern := range r.patterns {
-		reg, err := regexp.Compile(pattern)
-		common.Throw_panic(err)
+		reg, _ := regexp.Compile(pattern)
 
 		textMatched := reg.FindStringSubmatch(text)
 		if textMatched != nil {
@@ -207,6 +205,7 @@ func (r *RuleThree) AddQuestion(qs *question.Question) {
 	} else {
 		// logger.Info("==error==>试题编号不能为空, file: %v, question: %+v", r.FileName, r.currentQuestion)
 		// common.Throw_panic(errors.New(msg))
+		logger.Error("试题解析错误, 不符合试题规则：%v， %v", r.FileName, r.currentQuestion)
 	}
 }
 
