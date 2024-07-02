@@ -2,11 +2,11 @@
  * @Author: qizk qizk@mail.open.com.cn
  * @Date: 2024-06-20 14:15:06
  * @LastEditors: qizk qizk@mail.open.com.cn
- * @LastEditTime: 2024-06-27 10:12:26
+ * @LastEditTime: 2024-07-02 15:44:12
  * @FilePath: \word2excel\question\rules.go
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
-package rule_two
+package rules
 
 import (
 	"path/filepath"
@@ -29,7 +29,7 @@ type RuleTwo struct {
 	AllPaperQuestions     []question.Question
 }
 
-func NewRuleTwoInstance(config ...any) *RuleTwo {
+func NewRuleTwoInstance(config ...any) PaperRule {
 	size := 30
 	if len(config) > 0 {
 		if v, ok := config[0].(int); ok {

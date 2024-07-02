@@ -2,7 +2,7 @@
  * @Author: qizk qizk@mail.open.com.cn
  * @Date: 2022-09-06 13:44:45
  * @LastEditors: qizk qizk@mail.open.com.cn
- * @LastEditTime: 2024-06-27 15:22:51
+ * @LastEditTime: 2024-07-02 15:44:55
  * @FilePath: \go_demo\helloworld\hello.go
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: htcommon.Throw_panics://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -15,7 +15,7 @@ import (
 	"github.com/fumiama/go-docx"
 	"word2excel.io/common"
 	"word2excel.io/question"
-	"word2excel.io/question/factory"
+	"word2excel.io/question/rules"
 )
 
 type Word struct {
@@ -59,7 +59,7 @@ func (w Word) ParseContent() ([]question.Question, common.Judge) {
 	}
 
 	// 模板规则解析
-	rule, err := factory.GetRuleInstance(w.Template, 30)
+	rule, err := rules.GetRuleInstance(w.Template, 30)
 	if err != nil {
 		return nil, common.Judging(err, "模板规则解析错误：%v", w.Template)
 	}
