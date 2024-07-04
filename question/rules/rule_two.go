@@ -121,12 +121,12 @@ func (r *RuleTwo) ParseTitle(matched []string) {
 
 func (r *RuleTwo) ParseOptions(matched []string) {
 	r.currentQuestion.State = question.Q_OPTIONS
-	optionsNo := matched[1]
+	// optionsNo := matched[1]
 	optionText := matched[3]
-	newOption := optionsNo + ". " + optionText
+	// newOption := optionsNo + ". " + optionText
 
 	options := r.currentQuestion.Options
-	options = append(options, newOption)
+	options = append(options, optionText)
 	r.currentQuestion.Options = options
 
 	r.AddQuestion(nil)

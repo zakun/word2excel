@@ -2,7 +2,7 @@
  * @Author: qizk qizk@mail.open.com.cn
  * @Date: 2024-06-20 14:15:06
  * @LastEditors: qizk qizk@mail.open.com.cn
- * @LastEditTime: 2024-07-02 16:04:21
+ * @LastEditTime: 2024-07-04 15:03:10
  * @FilePath: \word2excel\question\rules.go
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -136,12 +136,12 @@ func (r *RuleOne) ParseOptions(matched []string) {
 		r.currentQuestion.State = question.Q_OPTIONS
 
 		if slices.Index([]int{1, 2}, r.currentQuestion.TypeNo) != -1 {
-			optionsNo := matched[1]
+			// optionsNo := matched[1]
 			optionText := matched[3]
-			newOption := optionsNo + ". " + optionText
+			// newOption := optionsNo + ". " + optionText
 
 			options := r.currentQuestion.Options
-			options = append(options, newOption)
+			options = append(options, optionText)
 			r.currentQuestion.Options = options
 
 			r.AddQuestion(nil)

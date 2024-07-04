@@ -117,12 +117,12 @@ func (r *RuleThree) ParseTitle(matched []string) {
 func (r *RuleThree) ParseOptions(matched []string) {
 	r.currentQuestion.State = question.Q_OPTIONS
 
-	optionsNo := matched[1]
+	// optionsNo := matched[1]
 	optionText := matched[3]
-	newOption := strings.ToUpper(optionsNo) + ". " + optionText
+	// newOption := strings.ToUpper(optionsNo) + ". " + optionText
 
 	options := r.currentQuestion.Options
-	options = append(options, newOption)
+	options = append(options, optionText)
 	r.currentQuestion.Options = options
 
 	r.AddQuestion(nil)
@@ -151,9 +151,9 @@ func (r *RuleThree) ParseAnswer(matched []string) {
 			// logger.Info("answers: %q, len: %v", s1, len(s1))
 			tmp := ""
 			for _, v := range s1 {
-				for _, option := range r.currentQuestion.Options {
+				for oi, option := range r.currentQuestion.Options {
 					if strings.Contains(option, v) {
-						tmp += option[0:1]
+						tmp += string(byte('A' + oi))
 					}
 				}
 			}
