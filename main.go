@@ -2,7 +2,7 @@
  * @Author: qizk qizk@mail.open.com.cn
  * @Date: 2022-09-06 13:44:45
  * @LastEditors: qizk qizk@mail.open.com.cn
- * @LastEditTime: 2024-06-28 13:58:57
+ * @LastEditTime: 2024-07-04 16:54:48
  * @FilePath: \helloworld\hello.go
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -51,7 +51,7 @@ func main() {
 	}
 
 	var fileNo int
-	var taskLimit = make(chan int, maxN) // 最大并发数控制
+	var limit = make(chan int, maxN) // 最大并发数控制
 	var wg sync.WaitGroup
 
 	time_start := time.Now()
@@ -64,9 +64,9 @@ func main() {
 				wordFile := word.NewWord(fileNo, name, template)
 				logger.Info("Word 文件: %v# %v", fileNo, name)
 
-				taskLimit <- fileNo
+				limit <- fileNo
 				wg.Add(1)
-				go func(c chan int) {
+				go func() {
 					defer wg.Done()
 
 					arrQuestion, ret := wordFile.ParseContent()
@@ -77,8 +77,8 @@ func main() {
 						logger.Info(ret.Msg)
 					}
 
-					<-c
-				}(taskLimit)
+					<-limit
+				}()
 			}
 
 		}
