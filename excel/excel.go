@@ -2,7 +2,7 @@
  * @Author: qizk qizk@mail.open.com.cn
  * @Date: 2024-05-17 15:35:01
  * @LastEditors: qizk qizk@mail.open.com.cn
- * @LastEditTime: 2024-06-25 13:06:28
+ * @LastEditTime: 2024-07-05 11:05:37
  * @FilePath: \word2excel\excel\excel.go
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -15,6 +15,7 @@ import (
 
 	"github.com/xuri/excelize/v2"
 	"word2excel.io/common"
+	"word2excel.io/logger"
 	"word2excel.io/question"
 )
 
@@ -35,7 +36,11 @@ var dicQuestionType = map[int]string{
 var rowNo = 1
 var sheetName = "Sheet1"
 
-func GenerateExcelFile(data []question.Question, name string) {
+func GenerateExcelFile(data []question.Question, name string, no int) {
+	defer func() {
+		logger.Info("=Excel file: #%v, %v", no, name)
+	}()
+
 	rowNo = 1
 	excelDir := "./runtime/excel"
 	if ok := common.IsExistDir(excelDir); !ok {
