@@ -2,7 +2,7 @@
  * @Author: qizk qizk@mail.open.com.cn
  * @Date: 2022-09-06 13:44:45
  * @LastEditors: qizk qizk@mail.open.com.cn
- * @LastEditTime: 2024-07-05 13:04:07
+ * @LastEditTime: 2024-07-05 14:08:13
  * @FilePath: \helloworld\hello.go
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -38,7 +38,7 @@ type Result struct {
 }
 
 func main() {
-	flag.StringVar(&template, "t", "", "请输入待解析的模板类型,当前仅支持值：two、three; two: 模板2类型，three: 模板3类型")
+	flag.StringVar(&template, "t", "", "请输入待解析的模板类型,当前仅支持值：onw, two, three; 分别对应三种模板类型")
 	flag.IntVar(&maxN, "n", 2, "请输入最大并发数")
 	flag.Parse()
 
@@ -110,13 +110,14 @@ func main() {
 			}
 			return nil
 		})
+		// 所有解析word goroutine 结束
+		wg.Wait()
+
 		// 目录遍历 异常
 		if err != nil {
 			common.Throw_panic(err)
 		}
 
-		// 所有解析word goroutine 结束
-		wg.Wait()
 	}(workDir)
 
 	var wg2 sync.WaitGroup
