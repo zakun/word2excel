@@ -2,7 +2,7 @@
  * @Author: qizk qizk@mail.open.com.cn
  * @Date: 2024-05-17 15:35:01
  * @LastEditors: qizk qizk@mail.open.com.cn
- * @LastEditTime: 2024-07-05 11:05:37
+ * @LastEditTime: 2024-07-26 14:04:23
  * @FilePath: \word2excel\excel\excel.go
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -33,7 +33,6 @@ var dicQuestionType = map[int]string{
 	7: "论述题",
 }
 
-var rowNo = 1
 var sheetName = "Sheet1"
 
 func GenerateExcelFile(data []question.Question, name string, no int) {
@@ -41,7 +40,6 @@ func GenerateExcelFile(data []question.Question, name string, no int) {
 		logger.Info("=Excel file: #%v, %v", no, name)
 	}()
 
-	rowNo = 1
 	excelDir := "./runtime/excel"
 	if ok := common.IsExistDir(excelDir); !ok {
 		err := os.Mkdir(excelDir, 0755)
@@ -75,17 +73,16 @@ func WriteHeader(f *excelize.File) {
 		d[i] = name
 	}
 
-	startCell, err := excelize.CoordinatesToCellName(1, rowNo)
+	startCell, err := excelize.CoordinatesToCellName(1, 1)
 	common.Throw_panic(err)
 
 	err = f.SetSheetRow(sheetName, startCell, &d)
 	common.Throw_panic(err)
-
-	rowNo += 1
 }
 
 func WriteBody(f *excelize.File, data []question.Question) {
 	if len(data) > 0 {
+		rowNo := 2
 		for _, item := range data {
 			formatData := FormatRow(item)
 
