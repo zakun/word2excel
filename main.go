@@ -2,7 +2,7 @@
  * @Author: qizk qizk@mail.open.com.cn
  * @Date: 2022-09-06 13:44:45
  * @LastEditors: qizk qizk@mail.open.com.cn
- * @LastEditTime: 2024-08-02 16:07:06
+ * @LastEditTime: 2024-08-05 11:09:36
  * @FilePath: \helloworld\hello.go
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -62,10 +62,15 @@ func main() {
 
 	// 生成excel
 	var wg sync.WaitGroup
+	limit := make(chan int, maxN)
 	for v := range res {
+		limit <- 1
 		wg.Add(1)
 		go func(r Result) {
-			defer wg.Done()
+			defer func() {
+				wg.Done()
+				<-limit
+			}()
 			excel.GenerateExcelFile(r.Data, r.Name, r.No)
 		}(v)
 	}
