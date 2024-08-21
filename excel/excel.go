@@ -2,7 +2,7 @@
  * @Author: qizk qizk@mail.open.com.cn
  * @Date: 2024-05-17 15:35:01
  * @LastEditors: qizk qizk@mail.open.com.cn
- * @LastEditTime: 2024-07-26 14:04:23
+ * @LastEditTime: 2024-08-21 10:58:17
  * @FilePath: \word2excel\excel\excel.go
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -36,10 +36,6 @@ var dicQuestionType = map[int]string{
 var sheetName = "Sheet1"
 
 func GenerateExcelFile(data []question.Question, name string, no int) {
-	defer func() {
-		logger.Info("=Excel file: #%v, %v", no, name)
-	}()
-
 	excelDir := "./runtime/excel"
 	if ok := common.IsExistDir(excelDir); !ok {
 		err := os.Mkdir(excelDir, 0755)
@@ -56,6 +52,7 @@ func GenerateExcelFile(data []question.Question, name string, no int) {
 	f := excelize.NewFile()
 	defer func() {
 		f.Close()
+		logger.Info("=Excel file: #%v, %v", no, excelPathName)
 	}()
 
 	// write file
@@ -104,6 +101,7 @@ func FormatRow(question question.Question) []interface{} {
 	var typeTxt string
 	var ok bool
 	if typeTxt, ok = dicQuestionType[question.TypeNo]; !ok {
+		logger.Info("题型名称无法识别: %+v", question)
 		common.Throw_panic(errors.New("题型名称无法识别"))
 	}
 

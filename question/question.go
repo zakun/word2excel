@@ -2,7 +2,7 @@
  * @Author: qizk qizk@mail.open.com.cn
  * @Date: 2024-05-13 10:33:03
  * @LastEditors: qizk qizk@mail.open.com.cn
- * @LastEditTime: 2024-06-21 10:07:28
+ * @LastEditTime: 2024-08-21 11:03:28
  * @FilePath: \word2excel\question\question.go
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: htcommon.Throw_panics://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -20,7 +20,7 @@ const (
 )
 
 var DicType = map[int][]string{
-	1: {"单项选择题", "选择填空题", "词汇与结构", "阅读程序题", "交际用语", "词汇语法", "阅读理解", "单选题", "完形填空"},
+	1: {"单项选择题", "选择题", "选择填空题", "词汇与结构", "阅读程序题", "交际用语", "词汇语法", "阅读理解", "单选题", "完形填空"},
 	2: {"多项选择题", "阅读理解题", "连线题", "多选题", "不定项选择题"},
 	3: {"判断题", "判断题（判断正误，并说明理由）"},
 	4: {"简答题", "编程题", "翻译", "概念题", "绘图题", "计算题", "名词解释", "设计题", "识图题", "应用题"},

@@ -2,7 +2,7 @@
  * @Author: qizk qizk@mail.open.com.cn
  * @Date: 2022-09-06 13:44:45
  * @LastEditors: qizk qizk@mail.open.com.cn
- * @LastEditTime: 2024-07-26 14:07:01
+ * @LastEditTime: 2024-08-21 15:04:58
  * @FilePath: \go_demo\helloworld\hello.go
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: htcommon.Throw_panics://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -32,7 +32,7 @@ func NewWord(no int, name string, template string) *Word {
 	}
 }
 
-func (w Word) ParseContent() ([]question.Question, common.Judge) {
+func (w *Word) ParseTemplateContent() ([]question.Question, common.Judge) {
 
 	file, err := os.Open(w.Name)
 	if err != nil {
