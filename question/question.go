@@ -8,6 +8,12 @@
  */
 package question
 
+import (
+	"encoding/json"
+
+	"word2excel.io/common"
+)
+
 type Q_STATE int
 
 const (
@@ -50,4 +56,11 @@ func (qs *Question) Reset() {
 	qs.Options = make([]string, 0, 8)
 	qs.Answer = ""
 	qs.Analysis = ""
+}
+
+func ToJson(data []Question) string {
+	str, err := json.Marshal(data)
+	common.Throw_panic(err)
+
+	return string(str)
 }

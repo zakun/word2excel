@@ -2,14 +2,13 @@
  * @Author: qizk qizk@mail.open.com.cn
  * @Date: 2022-09-06 13:44:45
  * @LastEditors: qizk qizk@mail.open.com.cn
- * @LastEditTime: 2024-08-21 15:04:58
+ * @LastEditTime: 2024-08-22 11:00:19
  * @FilePath: \go_demo\helloworld\hello.go
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: htcommon.Throw_panics://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 package word
 
 import (
-	"encoding/json"
 	"os"
 
 	"github.com/fumiama/go-docx"
@@ -76,11 +75,4 @@ func (w *Word) ParseTemplateContent() ([]question.Question, common.Judge) {
 	}
 	// common.DD("json: %v", ToJson(rule.GetAllQuestions()))
 	return rule.GetAllQuestions(), common.Success()
-}
-
-func ToJson(data []question.Question) string {
-	str, err := json.Marshal(data)
-	common.Throw_panic(err)
-
-	return string(str)
 }

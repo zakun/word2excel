@@ -2,7 +2,7 @@
  * @Author: qizk qizk@mail.open.com.cn
  * @Date: 2024-08-19 11:10:19
  * @LastEditors: qizk qizk@mail.open.com.cn
- * @LastEditTime: 2024-08-21 15:13:27
+ * @LastEditTime: 2024-08-22 10:55:37
  * @FilePath: \word2excel\functions.go
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -15,6 +15,7 @@ import (
 	"io/fs"
 	"path/filepath"
 	"runtime"
+	"slices"
 	"strings"
 	"sync"
 
@@ -56,7 +57,8 @@ func parseTempFile(cfile <-chan string, res chan<- Result) {
 			}()
 
 			arrQuestion, ret := tempFile.ParseTemplateContent()
-			// jsons := word.ToJson(arrQuestion)
+
+			// jsons := question.ToJson(arrQuestion)
 			// common.DD("json txt: %v", jsons)
 			// os.Exit(0)
 			if ret.Status && len(arrQuestion) > 0 {
@@ -74,84 +76,6 @@ func parseTempFile(cfile <-chan string, res chan<- Result) {
 	// 等待
 	wg.Wait()
 }
-
-// func parseHtml(chtml <-chan string, res chan<- Result) {
-// 	defer close(res)
-
-// 	var wg sync.WaitGroup
-// 	var limit = make(chan int, maxN) // 最大并发数控制
-// 	fileNo := 0
-
-// 	for name := range chtml {
-// 		fileNo++
-// 		htmlFile := html.NewHtml(fileNo, name, template)
-
-// 		limit <- 1
-// 		wg.Add(1)
-// 		// html 文件解析
-// 		go func() {
-// 			defer func() {
-// 				wg.Done()
-// 				<-limit
-// 			}()
-
-// 			arrQuestion, ret := htmlFile.ParseHtmlContent()
-
-// 			// jsons := word.ToJson(arrQuestion)
-// 			// common.DD("json txt: %v", jsons)
-// 			// os.Exit(0)
-// 			if ret.Status && len(arrQuestion) > 0 {
-// 				// 解析结果
-// 				res <- Result{
-// 					No:   htmlFile.No,
-// 					Name: htmlFile.Name,
-// 					Data: arrQuestion,
-// 				}
-// 			} else {
-// 				logger.Info("=解析失败: %v, 试题长度：%v", ret.Msg, len(arrQuestion))
-// 			}
-// 		}()
-// 	}
-// 	// 等待
-// 	wg.Wait()
-// }
-
-// func parseWords(docx <-chan string, res chan<- Result) {
-// 	defer close(res)
-
-// 	var wg sync.WaitGroup
-// 	var limit = make(chan int, maxN) // 最大并发数控制
-// 	fileNo := 0
-
-// 	for name := range docx {
-// 		fileNo++
-// 		wordFile := word.NewWord(fileNo, name, template)
-
-// 		limit <- 1
-// 		wg.Add(1)
-// 		// word文件解析
-// 		go func() {
-// 			defer func() {
-// 				wg.Done()
-// 				<-limit
-// 			}()
-
-// 			arrQuestion, ret := wordFile.ParseContent()
-// 			if ret.Status && len(arrQuestion) > 0 {
-// 				// 解析结果
-// 				res <- Result{
-// 					No:   wordFile.No,
-// 					Name: wordFile.Name,
-// 					Data: arrQuestion,
-// 				}
-// 			} else {
-// 				logger.Info("=解析失败：%v, 试题长度：%v", ret.Msg, len(arrQuestion))
-// 			}
-// 		}()
-// 	}
-// 	// 等待
-// 	wg.Wait()
-// }
 
 func walkDir(path string, ext string, docx chan<- string) {
 	defer close(docx)
@@ -174,7 +98,7 @@ func walkDir(path string, ext string, docx chan<- string) {
 }
 
 func parseFlag() {
-	flag.StringVar(&template, "t", "", "请输入待解析的模板类型,当前仅支持值：one, two, three; 分别对应三种模板类型")
+	flag.StringVar(&template, "t", "", "请输入待解析的模板类型,当前仅支持值：one, two, three, html; 分别对应四种模板类型")
 	flag.IntVar(&maxN, "n", 2, "请输入最大并发数")
 	flag.Parse()
 
@@ -183,8 +107,9 @@ func parseFlag() {
 		common.Throw_panic(errors.New(msg))
 	}
 
-	if template == "" {
-		common.Throw_panic(errors.New("请输入待解析的模板类型"))
+	allTemplateType := append(dTemplate["word"], dTemplate["html"]...)
+	if !slices.Contains(allTemplateType, template) {
+		common.Throw_panic(errors.New("请输入待解析的模板类型: " + strings.Join(allTemplateType, ",")))
 	}
 }
 
