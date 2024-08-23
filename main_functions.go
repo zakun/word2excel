@@ -2,7 +2,7 @@
  * @Author: qizk qizk@mail.open.com.cn
  * @Date: 2024-08-19 11:10:19
  * @LastEditors: qizk qizk@mail.open.com.cn
- * @LastEditTime: 2024-08-22 10:55:37
+ * @LastEditTime: 2024-08-23 15:44:29
  * @FilePath: \word2excel\functions.go
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -43,7 +43,7 @@ func parseTempFile(cfile <-chan string, res chan<- Result) {
 
 		var tempFile TempFile
 		tempFile = html.NewHtml(fileNo, tempName, template)
-		if strings.Contains(strings.Join([]string{"one", "two", "three"}, "|"), template) {
+		if slices.Contains(dTemplate["word"], template) {
 			tempFile = word.NewWord(fileNo, tempName, template)
 		}
 
