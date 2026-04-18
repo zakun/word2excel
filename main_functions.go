@@ -39,6 +39,7 @@ func parseTempFile(cfile <-chan string, res chan<- Result) {
 
 	for name := range cfile {
 		fileNo++
+		no := fileNo
 		tempName := name
 
 		var tempFile TempFile
@@ -50,7 +51,7 @@ func parseTempFile(cfile <-chan string, res chan<- Result) {
 		limit <- 1
 		wg.Add(1)
 		// 模板文件 解析
-		go func() {
+		go func(fileNo int, tmpName string) {
 			defer func() {
 				wg.Done()
 				<-limit
@@ -64,14 +65,14 @@ func parseTempFile(cfile <-chan string, res chan<- Result) {
 			if ret.Status && len(arrQuestion) > 0 {
 				// 解析结果
 				res <- Result{
-					No:   fileNo,
+					No:   no,
 					Name: tempName,
 					Data: arrQuestion,
 				}
 			} else {
 				logger.Info("=解析失败: %v, 试题长度：%v", ret.Msg, len(arrQuestion))
 			}
-		}()
+		}(no, tempName)
 	}
 	// 等待
 	wg.Wait()
